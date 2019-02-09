@@ -42,14 +42,15 @@ public class PlayerAttackHorseListener implements Listener {
 		double speed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue();
 		double speedblocks = speed*43; // scale internal value into m/s
 		speedblocks = Math.round(speedblocks*100000.0) / 100000.0; // janky rounding to 5 decimal places
-		double speedpercent = 100 * speed / 0.3375;
+		double speedpercent = 100 * (speed-0.1125) / (0.3375 - 0.1125);
 		speedpercent = Math.round(speedpercent*100.0) / 100.0; // janky rounding to 2 decimal places
 		double jump = horse.getJumpStrength();
 		double jumpblocks = -0.1817584952*Math.pow(jump, 3) + 3.689713992*Math.pow(jump, 2) + 2.128599134*jump - 0.343930367; // scale internal value into m (approx.)
 		jumpblocks = Math.round(jumpblocks*100000.0) / 100000.0; // janky rounding to 5 decimal places
-		double jumppercent = Math.round(100 * jump * 100.0) / 100.0; // janky rounding to 2 decimal places
+		double jumppercent = 100 * (jump - 0.4) / (1.0 - 0.4);
+		jumppercent = Math.round(100 * jump * 100.0) / 100.0; // janky rounding to 2 decimal places
 		double hp = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-		double hppercent = 100 * hp / 30.0;
+		double hppercent = 100 * (hp - 15) / (30.0 - 15);
 		hppercent = Math.round(hppercent * 100.0) / 100.0; // janky rounding to 2 decimal places
 		
 		// Compose message to send to player
