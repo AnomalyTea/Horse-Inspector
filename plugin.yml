@@ -1,0 +1,5 @@
+name: Horse_Inspector
+main: com.anomalytea.HorseInspector.HorseInspector
+version: 0.1.0
+api-version: 1.13
+commands:
