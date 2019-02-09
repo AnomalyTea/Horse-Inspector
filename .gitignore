@@ -23,5 +23,7 @@
 hs_err_pid*
 /bin/
 
-# Don't exclude anything in resources directory
-!resources/*
+# Eclipse
+/bin/**
+.classpath
+.project
