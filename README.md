@@ -1,7 +1,7 @@
 # Horse Inspector
 
 ## What is it?
-Horse Inspector is a simple mod which allows players to acquire data about horses' speed, hp, and jump height without having to build in-game contraptions to test them.
+Horse Inspector is a simple Spigot/Craftbukkit mod which allows players to acquire data about horses' speed, hp, and jump height without having to build in-game contraptions to test them.
 
 ## How to use (Players)
 Hit a horse with a stick. No damage will occur, and the server will send you the horse's speed, max hp, and jump height.
