@@ -1,6 +1,8 @@
 package com.anomalytea.HorseInspector;
 
 import java.util.ArrayList;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
@@ -56,30 +58,33 @@ public class PlayerAttackHorseListener implements Listener {
 		hppercent = Math.round(hppercent * 100.0) / 100.0; // janky rounding to 2 decimal places
 		
 		// Compose message to send to player
+		ChatColor labelColor = ChatColor.GREEN;
+		ChatColor percentColor = ChatColor.DARK_AQUA;
+		ChatColor resetColor = ChatColor.RESET;
 		ArrayList<String> msg = new ArrayList<String>();
 		boolean isHorse = e.getEntityType().equals(EntityType.HORSE) || e.getEntityType().equals(EntityType.SKELETON_HORSE) || e.getEntityType().equals(EntityType.ZOMBIE_HORSE);
 		msg.add("--Horse Info--");
 		// Speed
 		if (isHorse) {
-			msg.add("Speed: " + speedblocks + " m/s (" + String.valueOf(speedpercent) + "% of max)");
+			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s " + percentColor + "(" + String.valueOf(speedpercent) + "% of max)" + resetColor);
 		} else {
-			msg.add("Speed: " + speedblocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
+			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
 		}
 		// HP
-		msg.add("HP: " + String.valueOf(hp/2) + " hearts (" + String.valueOf(hppercent) + "% of max)");
+		msg.add(labelColor + "HP: " + resetColor + String.valueOf(hp/2) + " hearts " + percentColor + "(" + String.valueOf(hppercent) + "% of max)" + resetColor);
 		// Jump Height
 		if (isHorse) {
-			msg.add("Jump height: " + jumpblocks + " m (" + String.valueOf(jumppercent) + "% of max)");
+			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m " + percentColor + "(" + String.valueOf(jumppercent) + "% of max)" + resetColor);
 		} else {
-			msg.add("Jump height: " + jumpblocks + " m"); // Jump height isn't variable for Donkeys and Llamas
+			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m"); // Jump height isn't variable for Donkeys and Llamas
 		}
 		// Tamer
 		if (horse.getOwner() == null) {
-			msg.add("Tamer:  Not tamed");
+			msg.add(labelColor + "Tamer: " + resetColor + "Not tamed");
 		} else if (horse.getOwner().getName() == null) {
-			msg.add("Tamer:  " + horse.getOwner().getUniqueId());
+			msg.add(labelColor + "Tamer: " + resetColor + horse.getOwner().getUniqueId());
 		} else {
-			msg.add("Tamer:  " + horse.getOwner().getName());
+			msg.add(labelColor + "Tamer: " + resetColor + horse.getOwner().getName());
 		}
 		
 		// Send message to player
