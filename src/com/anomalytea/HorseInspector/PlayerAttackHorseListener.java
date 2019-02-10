@@ -59,6 +59,13 @@ public class PlayerAttackHorseListener implements Listener {
 		msg.add("Speed: " + speedblocks + " m/s (" + String.valueOf(speedpercent) + "% of max)");
 		msg.add("HP: " + String.valueOf(hp/2) + " hearts (" + String.valueOf(hppercent) + "% of max)");
 		msg.add("Jump height: " + jumpblocks + " m (" + String.valueOf(jumppercent) + "% of max)");
+		if (horse.getOwner().getName() != null) {
+			msg.add("Tamer:  " + horse.getOwner().getName());
+		} else if (horse.getOwner().getUniqueId() != null) {
+			msg.add("Tamer:  " + horse.getOwner().getUniqueId());
+		} else {
+			msg.add("Tamer:  Not tamed");
+		}
 		
 		// Send message to player
 		for (String m : msg) {
