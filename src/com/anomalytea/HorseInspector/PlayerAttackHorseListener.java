@@ -3,8 +3,8 @@ package com.anomalytea.HorseInspector;
 import java.util.ArrayList;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,7 +24,9 @@ public class PlayerAttackHorseListener implements Listener {
 		// Only catch horse type victims
 		if(!(e.getEntityType().equals(EntityType.HORSE)
 				|| e.getEntityType().equals(EntityType.SKELETON_HORSE)
-				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)))
+				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
+				|| e.getEntityType().equals(EntityType.DONKEY)
+				|| e.getEntityType().equals(EntityType.LLAMA)))
 		{
 			return;
 		}
@@ -38,7 +40,7 @@ public class PlayerAttackHorseListener implements Listener {
 		e.setCancelled(true);
 		
 		// Get horse data
-		Horse horse = (Horse) e.getEntity();
+		AbstractHorse horse = (AbstractHorse) e.getEntity();
 		double speed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue();
 		double speedblocks = speed*43; // scale internal value into m/s
 		speedblocks = Math.round(speedblocks*100000.0) / 100000.0; // janky rounding to 5 decimal places
