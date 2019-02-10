@@ -1,10 +1,12 @@
 package com.anomalytea.HorseInspector;
 
 import java.util.ArrayList;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,7 +26,9 @@ public class PlayerAttackHorseListener implements Listener {
 		// Only catch horse type victims
 		if(!(e.getEntityType().equals(EntityType.HORSE)
 				|| e.getEntityType().equals(EntityType.SKELETON_HORSE)
-				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)))
+				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
+				|| e.getEntityType().equals(EntityType.DONKEY)
+				|| e.getEntityType().equals(EntityType.LLAMA)))
 		{
 			return;
 		}
@@ -38,7 +42,7 @@ public class PlayerAttackHorseListener implements Listener {
 		e.setCancelled(true);
 		
 		// Get horse data
-		Horse horse = (Horse) e.getEntity();
+		AbstractHorse horse = (AbstractHorse) e.getEntity();
 		double speed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue();
 		double speedblocks = speed*43; // scale internal value into m/s
 		speedblocks = Math.round(speedblocks*100000.0) / 100000.0; // janky rounding to 5 decimal places
@@ -54,11 +58,34 @@ public class PlayerAttackHorseListener implements Listener {
 		hppercent = Math.round(hppercent * 100.0) / 100.0; // janky rounding to 2 decimal places
 		
 		// Compose message to send to player
+		ChatColor labelColor = ChatColor.GREEN;
+		ChatColor percentColor = ChatColor.DARK_AQUA;
+		ChatColor resetColor = ChatColor.RESET;
 		ArrayList<String> msg = new ArrayList<String>();
+		boolean isHorse = e.getEntityType().equals(EntityType.HORSE) || e.getEntityType().equals(EntityType.SKELETON_HORSE) || e.getEntityType().equals(EntityType.ZOMBIE_HORSE);
 		msg.add("--Horse Info--");
-		msg.add("Speed: " + speedblocks + " m/s (" + String.valueOf(speedpercent) + "% of max)");
-		msg.add("HP: " + String.valueOf(hp/2) + " hearts (" + String.valueOf(hppercent) + "% of max)");
-		msg.add("Jump height: " + jumpblocks + " m (" + String.valueOf(jumppercent) + "% of max)");
+		// Speed
+		if (isHorse) {
+			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s " + percentColor + "(" + String.valueOf(speedpercent) + "% of max)" + resetColor);
+		} else {
+			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
+		}
+		// HP
+		msg.add(labelColor + "HP: " + resetColor + String.valueOf(hp/2) + " hearts " + percentColor + "(" + String.valueOf(hppercent) + "% of max)" + resetColor);
+		// Jump Height
+		if (isHorse) {
+			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m " + percentColor + "(" + String.valueOf(jumppercent) + "% of max)" + resetColor);
+		} else {
+			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m"); // Jump height isn't variable for Donkeys and Llamas
+		}
+		// Tamer
+		if (horse.getOwner() == null) {
+			msg.add(labelColor + "Tamer: " + resetColor + "Not tamed");
+		} else if (horse.getOwner().getName() == null) {
+			msg.add(labelColor + "Tamer: " + resetColor + horse.getOwner().getUniqueId());
+		} else {
+			msg.add(labelColor + "Tamer: " + resetColor + horse.getOwner().getName());
+		}
 		
 		// Send message to player
 		for (String m : msg) {
