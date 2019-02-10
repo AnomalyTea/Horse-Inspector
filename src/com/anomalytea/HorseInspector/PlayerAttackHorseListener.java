@@ -57,10 +57,23 @@ public class PlayerAttackHorseListener implements Listener {
 		
 		// Compose message to send to player
 		ArrayList<String> msg = new ArrayList<String>();
+		boolean isHorse = e.getEntityType().equals(EntityType.HORSE) || e.getEntityType().equals(EntityType.SKELETON_HORSE) || e.getEntityType().equals(EntityType.ZOMBIE_HORSE);
 		msg.add("--Horse Info--");
-		msg.add("Speed: " + speedblocks + " m/s (" + String.valueOf(speedpercent) + "% of max)");
+		// Speed
+		if (isHorse) {
+			msg.add("Speed: " + speedblocks + " m/s (" + String.valueOf(speedpercent) + "% of max)");
+		} else {
+			msg.add("Speed: " + speedblocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
+		}
+		// HP
 		msg.add("HP: " + String.valueOf(hp/2) + " hearts (" + String.valueOf(hppercent) + "% of max)");
-		msg.add("Jump height: " + jumpblocks + " m (" + String.valueOf(jumppercent) + "% of max)");
+		// Jump Height
+		if (isHorse) {
+			msg.add("Jump height: " + jumpblocks + " m (" + String.valueOf(jumppercent) + "% of max)");
+		} else {
+			msg.add("Jump height: " + jumpblocks + " m"); // Jump height isn't variable for Donkeys and Llamas
+		}
+		// Tamer
 		if (horse.getOwner() == null) {
 			msg.add("Tamer:  Not tamed");
 		} else if (horse.getOwner().getName() == null) {
