@@ -10,4 +10,4 @@ Hit a horse with a stick. No damage will occur, and the server will send you the
 Download Horse_Inspector.jar from the GitHub [releases page](https://github.com/AnomalyTea/Horse-Inspector/releases), and drop it into your server's Plugin directory. No further configuration is necessary.
 
 ## Support
-For bug reports, feature suggestions, etc, please [open an issue](https://github.com/AnomalyTea/Horse-Inspector/issues/new) here on GitHub.
+For bug reports, feature suggestions, etc, please [open an issue](https://github.com/AnomalyTea/Horse-Inspector/issues) here on GitHub.
