@@ -55,6 +55,7 @@ public class PlayerAttackHorseListener implements Listener {
 		double jumppercent = 100 * (jump - 0.4) / (1.0 - 0.4);
 		jumppercent = Math.round(100 * jump * 100.0) / 100.0; // janky rounding to 2 decimal places
 		double hp = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+		hp = Math.round(hp * 50.0) / 50.0 ; // janky rounding to 2 decimal places after being divided by 2
 		double hppercent = 100 * (hp - 15) / (30.0 - 15);
 		hppercent = Math.round(hppercent * 100.0) / 100.0; // janky rounding to 2 decimal places
 		
