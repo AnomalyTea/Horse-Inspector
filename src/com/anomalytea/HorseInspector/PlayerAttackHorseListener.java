@@ -28,6 +28,7 @@ public class PlayerAttackHorseListener implements Listener {
 				|| e.getEntityType().equals(EntityType.SKELETON_HORSE)
 				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
 				|| e.getEntityType().equals(EntityType.DONKEY)
+				|| e.getEntityType().equals(EntityType.MULE)
 				|| e.getEntityType().equals(EntityType.LLAMA)))
 		{
 			return;
@@ -54,6 +55,7 @@ public class PlayerAttackHorseListener implements Listener {
 		double jumppercent = 100 * (jump - 0.4) / (1.0 - 0.4);
 		jumppercent = Math.round(100 * jump * 100.0) / 100.0; // janky rounding to 2 decimal places
 		double hp = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+		hp = Math.round(hp * 50.0) / 50.0 ; // janky rounding to 2 decimal places after being divided by 2
 		double hppercent = 100 * (hp - 15) / (30.0 - 15);
 		hppercent = Math.round(hppercent * 100.0) / 100.0; // janky rounding to 2 decimal places
 		
@@ -62,10 +64,13 @@ public class PlayerAttackHorseListener implements Listener {
 		ChatColor percentColor = ChatColor.DARK_AQUA;
 		ChatColor resetColor = ChatColor.RESET;
 		ArrayList<String> msg = new ArrayList<String>();
-		boolean isHorse = e.getEntityType().equals(EntityType.HORSE) || e.getEntityType().equals(EntityType.SKELETON_HORSE) || e.getEntityType().equals(EntityType.ZOMBIE_HORSE);
+		boolean calcPercent = e.getEntityType().equals(EntityType.HORSE)
+				|| e.getEntityType().equals(EntityType.SKELETON_HORSE)
+				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
+				|| e.getEntityType().equals(EntityType.MULE);
 		msg.add("--Horse Info--");
 		// Speed
-		if (isHorse) {
+		if (calcPercent) {
 			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s " + percentColor + "(" + String.valueOf(speedpercent) + "% of max)" + resetColor);
 		} else {
 			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
@@ -73,7 +78,7 @@ public class PlayerAttackHorseListener implements Listener {
 		// HP
 		msg.add(labelColor + "HP: " + resetColor + String.valueOf(hp/2) + " hearts " + percentColor + "(" + String.valueOf(hppercent) + "% of max)" + resetColor);
 		// Jump Height
-		if (isHorse) {
+		if (calcPercent) {
 			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m " + percentColor + "(" + String.valueOf(jumppercent) + "% of max)" + resetColor);
 		} else {
 			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m"); // Jump height isn't variable for Donkeys and Llamas

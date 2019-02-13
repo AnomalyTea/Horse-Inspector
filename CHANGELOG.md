@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2019-02-12
+### Fixed
+- Mules are now properly recognized
+
 ## [1.1.0] - 2019-02-10
 ### Added
 - Shows name of player who tamed the horse (thanks [datatags](https://github.com/datatags)).
