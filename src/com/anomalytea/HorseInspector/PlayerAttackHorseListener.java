@@ -45,19 +45,28 @@ public class PlayerAttackHorseListener implements Listener {
 		// Get horse data
 		AbstractHorse horse = (AbstractHorse) e.getEntity();
 		double speed = horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getValue();
-		double speedblocks = speed*43; // scale internal value into m/s
-		speedblocks = Math.round(speedblocks*100000.0) / 100000.0; // janky rounding to 5 decimal places
-		double speedpercent = 100 * (speed-0.1125) / (0.3375 - 0.1125);
-		speedpercent = Math.round(speedpercent*100.0) / 100.0; // janky rounding to 2 decimal places
 		double jump = horse.getJumpStrength();
-		double jumpblocks = -0.1817584952*Math.pow(jump, 3) + 3.689713992*Math.pow(jump, 2) + 2.128599134*jump - 0.343930367; // scale internal value into m (approx.)
-		jumpblocks = Math.round(jumpblocks*100000.0) / 100000.0; // janky rounding to 5 decimal places
-		double jumppercent = 100 * (jump - 0.4) / (1.0 - 0.4);
-		jumppercent = Math.round(100 * jump * 100.0) / 100.0; // janky rounding to 2 decimal places
 		double hp = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
-		hp = Math.round(hp * 50.0) / 50.0 ; // janky rounding to 2 decimal places after being divided by 2
-		double hppercent = 100 * (hp - 15) / (30.0 - 15);
-		hppercent = Math.round(hppercent * 100.0) / 100.0; // janky rounding to 2 decimal places
+		
+		// Convert internal values into meaningful numbers
+		double speedblocks = speed * 43; // m/s
+		double jumpblocks = -0.1817584952 * Math.pow(jump, 3) + 3.689713992*Math.pow(jump, 2) + 2.128599134 * jump - 0.343930367; // m
+		double hearts = hp / 2.0;
+		
+		// Round values for display
+		speedblocks = Math.round(speedblocks * 100000.0) / 100000.0;
+		jumpblocks = Math.round(jumpblocks * 100000.0) / 100000.0;
+		hearts = Math.round(hearts * 100.0) / 100.0 ;
+		
+		// Calculate percentages
+		double speedpercent = 100 * (speed - 0.1125) / (0.3375 - 0.1125);
+		double jumppercent = 100 * (jump - 0.4) / (1.0 - 0.4);
+		double hppercent = 100 * (hp - 15.0) / (30.0 - 15.0);
+		
+		// Round percentages for display
+		speedpercent = Math.round(speedpercent * 100.0) / 100.0;
+		jumppercent = Math.round(100 * jump * 100.0) / 100.0;
+		hppercent = Math.round(hppercent * 100.0) / 100.0;
 		
 		// Compose message to send to player
 		ChatColor labelColor = ChatColor.GREEN;
@@ -76,7 +85,7 @@ public class PlayerAttackHorseListener implements Listener {
 			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
 		}
 		// HP
-		msg.add(labelColor + "HP: " + resetColor + String.valueOf(hp/2) + " hearts " + percentColor + "(" + String.valueOf(hppercent) + "% of max)" + resetColor);
+		msg.add(labelColor + "HP: " + resetColor + String.valueOf(hearts) + " hearts " + percentColor + "(" + String.valueOf(hppercent) + "% of max)" + resetColor);
 		// Jump Height
 		if (calcPercent) {
 			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m " + percentColor + "(" + String.valueOf(jumppercent) + "% of max)" + resetColor);
