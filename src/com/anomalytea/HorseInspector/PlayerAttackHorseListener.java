@@ -66,7 +66,7 @@ public class PlayerAttackHorseListener implements Listener {
 		double hppercent = 100 * (hp - 15.0) / (30.0 - 15.0);
 		
 		// Round percentages for display
-		speedpercent = round(jumppercent, 2);
+		speedpercent = round(speedpercent, 2);
 		jumppercent = round(jumppercent, 2);
 		hppercent = round(hppercent, 2);
 		
