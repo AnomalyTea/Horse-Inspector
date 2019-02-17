@@ -1,5 +1,7 @@
 package com.anomalytea.HorseInspector;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
@@ -54,9 +56,9 @@ public class PlayerAttackHorseListener implements Listener {
 		double hearts = hp / 2.0;
 		
 		// Round values for display
-		speedblocks = Math.round(speedblocks * 100000.0) / 100000.0;
-		jumpblocks = Math.round(jumpblocks * 100000.0) / 100000.0;
-		hearts = Math.round(hearts * 100.0) / 100.0 ;
+		speedblocks = round(speedblocks, 2);
+		jumpblocks = round(jumpblocks, 2);
+		hearts = round(hearts, 2);
 		
 		// Calculate percentages
 		double speedpercent = 100 * (speed - 0.1125) / (0.3375 - 0.1125);
@@ -64,9 +66,9 @@ public class PlayerAttackHorseListener implements Listener {
 		double hppercent = 100 * (hp - 15.0) / (30.0 - 15.0);
 		
 		// Round percentages for display
-		speedpercent = Math.round(speedpercent * 100.0) / 100.0;
-		jumppercent = Math.round(100 * jump * 100.0) / 100.0;
-		hppercent = Math.round(hppercent * 100.0) / 100.0;
+		speedpercent = round(jumppercent, 2);
+		jumppercent = round(jumppercent, 2);
+		hppercent = round(hppercent, 2);
 		
 		// Compose message to send to player
 		ChatColor labelColor = ChatColor.GREEN;
@@ -105,6 +107,13 @@ public class PlayerAttackHorseListener implements Listener {
 		for (String m : msg) {
 			e.getDamager().sendMessage(m);
 		}
+	}
+	
+	public static double round(double value, int places) {
+		if (places < 0) throw new IllegalArgumentException();
+		BigDecimal bd = new BigDecimal(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
 	}
 
 }
