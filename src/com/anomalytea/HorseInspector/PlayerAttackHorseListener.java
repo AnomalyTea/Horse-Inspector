@@ -91,8 +91,8 @@ public class PlayerAttackHorseListener implements Listener {
 			titleLine += "Horse";
 		}
 		titleLine += " Info";
-		if (horse.getName() != null) {
-			titleLine += ": " + horse.getName();
+		if (horse.getCustomName() != null) {
+			titleLine += ": " + horse.getCustomName();
 		}
 		titleLine += "--";			
 		msg.add(titleLine);
