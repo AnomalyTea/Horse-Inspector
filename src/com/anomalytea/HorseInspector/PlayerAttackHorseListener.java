@@ -79,7 +79,23 @@ public class PlayerAttackHorseListener implements Listener {
 				|| e.getEntityType().equals(EntityType.SKELETON_HORSE)
 				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
 				|| e.getEntityType().equals(EntityType.MULE);
-		msg.add("--Horse Info--");
+		
+		String titleLine = labelColor + "--";
+		if (horse.getType().equals(EntityType.DONKEY)) {
+			titleLine += "Donkey";
+		} else if (horse.getType().equals(EntityType.MULE)) {
+			titleLine += "Mule";
+		} else if (horse.getType().equals(EntityType.LLAMA)) {
+			titleLine += "Llama";
+		} else {
+			titleLine += "Horse";
+		}
+		titleLine += " Info";
+		if (horse.getName() != null) {
+			titleLine += ": " + horse.getName();
+		}
+		titleLine += "--";			
+		msg.add(titleLine);
 		// Speed
 		if (calcPercent) {
 			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s " + percentColor + "(" + String.valueOf(speedpercent) + "% of max)" + resetColor);
