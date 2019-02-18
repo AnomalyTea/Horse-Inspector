@@ -43,8 +43,8 @@ public class PlayerAttackHorseListener implements Listener {
 			return;
 		}
 		
-		// Only catch whacks with stick
-		if( !((Player) e.getDamager()).getInventory().getItemInMainHand().getType().equals(Material.STICK) ) {
+		// Only catch whacks with configured item
+		if( !((Player) e.getDamager()).getInventory().getItemInMainHand().getType().equals(plugin.getConfigItem()) ) {
 			return;
 		}
 		

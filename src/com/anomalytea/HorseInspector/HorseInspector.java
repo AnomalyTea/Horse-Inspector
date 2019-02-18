@@ -5,11 +5,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class HorseInspector extends JavaPlugin {
 
 	private boolean configShowTamer;
+	private Material configItem;
 	
 	@Override
 	public void onEnable() {
@@ -46,10 +48,23 @@ public class HorseInspector extends JavaPlugin {
 
 	public void loadConfig() {
 		this.configShowTamer = this.getConfig().getBoolean("show-tamer");
+
+		this.configItem = Material.matchMaterial(this.getConfig().getString("item"));
+
+		if (this.configItem == null) {
+			this.configItem = Material.STICK;
+			System.out.println("[" + this.getDescription().getName() + "] Error reading config: invalid item. Using STICK instead.");
+		}
+
+		this.saveConfig();
 	}
 
 	public boolean getConfigShowTamer() {
 		return configShowTamer;
+	}
+
+	public Material getConfigItem() {
+		return configItem;
 	}
 
 }
