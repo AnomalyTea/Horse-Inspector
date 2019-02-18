@@ -8,10 +8,15 @@ import java.net.URL;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class HorseInspector extends JavaPlugin {
+
+	private boolean configShowTamer;
 	
 	@Override
 	public void onEnable() {
-		getServer().getPluginManager().registerEvents(new PlayerAttackHorseListener(), this);
+		saveDefaultConfig();
+		loadConfig();
+
+		getServer().getPluginManager().registerEvents(new PlayerAttackHorseListener(this), this);
 		checkForUpdate();
 	}
 	
@@ -37,6 +42,14 @@ public class HorseInspector extends JavaPlugin {
 		} catch (IOException e) {
 			System.out.println(tag + "An error occurred while checking for updates.");
 		}
+	}
+
+	public void loadConfig() {
+		this.configShowTamer = this.getConfig().getBoolean("show-tamer");
+	}
+
+	public boolean getConfigShowTamer() {
+		return configShowTamer;
 	}
 
 }

@@ -118,7 +118,9 @@ public class PlayerAttackHorseListener implements Listener {
 			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m"); // Jump height isn't variable for Donkeys and Llamas
 		}
 		// Tamer
-		if (horse.getOwner() == null) {
+		if (!plugin.getConfigShowTamer()) {
+			// skip this line of the output
+		} else if (horse.getOwner() == null) {
 			msg.add(labelColor + "Tamer: " + resetColor + "Not tamed");
 		} else if (horse.getOwner().getName() == null) {
 			msg.add(labelColor + "Tamer: " + resetColor + horse.getOwner().getUniqueId());
