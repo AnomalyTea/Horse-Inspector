@@ -3,3 +3,6 @@ main: com.anomalytea.HorseInspector.HorseInspector
 version: 1.1.1
 api-version: 1.13
 commands:
+  horseinspector:
+    description: Reload the Horse Inspector configuration file without restarting the server.
+    usage: /horseinspector reload

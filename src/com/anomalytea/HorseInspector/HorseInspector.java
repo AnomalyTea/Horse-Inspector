@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,8 +18,13 @@ public class HorseInspector extends JavaPlugin {
 	public void onEnable() {
 		saveDefaultConfig();
 		loadConfig();
+		this.saveConfig();
 
 		getServer().getPluginManager().registerEvents(new PlayerAttackHorseListener(this), this);
+
+		this.getCommand("horseinspector").setExecutor(new CommandHandler(this));
+		this.getCommand("horseinspector").setTabCompleter(new TabComplete());
+
 		checkForUpdate();
 	}
 	
@@ -46,17 +52,25 @@ public class HorseInspector extends JavaPlugin {
 		}
 	}
 
-	public void loadConfig() {
+	public ArrayList<String> loadConfig() {
+
+		ArrayList<String> msg = new ArrayList<>();
+
+		this.reloadConfig();
+
 		this.configShowTamer = this.getConfig().getBoolean("show-tamer");
 
 		this.configItem = Material.matchMaterial(this.getConfig().getString("item"));
-
 		if (this.configItem == null) {
 			this.configItem = Material.STICK;
-			System.out.println("[" + this.getDescription().getName() + "] Error reading config: invalid item. Using STICK instead.");
+			msg.add("[" + this.getDescription().getName() + "] Error reading config: invalid item. Using STICK instead.");
+			System.out.println(msg.get(msg.size() - 1));
 		}
 
-		this.saveConfig();
+		msg.add("[" + this.getDescription().getName() + "] Config file loaded.");
+		System.out.println(msg.get(msg.size() - 1));
+
+		return msg;
 	}
 
 	public boolean getConfigShowTamer() {
