@@ -99,9 +99,9 @@ public class PlayerAttackHorseListener implements Listener {
 		}
 		titleLine += " Info";
 		if (horse.getCustomName() != null) {
-			titleLine += ": " + horse.getCustomName();
+			titleLine += ": " + resetColor + horse.getCustomName();
 		}
-		titleLine += "--";			
+		titleLine += labelColor + "--";
 		msg.add(titleLine);
 		// Speed
 		if (calcPercent) {
