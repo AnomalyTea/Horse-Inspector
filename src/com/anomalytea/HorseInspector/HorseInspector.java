@@ -13,6 +13,7 @@ public class HorseInspector extends JavaPlugin {
 
 	private boolean configShowTamer;
 	private Material configItem;
+	private boolean configCheckForUpdates;
 	
 	@Override
 	public void onEnable() {
@@ -25,7 +26,7 @@ public class HorseInspector extends JavaPlugin {
 		this.getCommand("horseinspector").setExecutor(new CommandHandler(this));
 		this.getCommand("horseinspector").setTabCompleter(new TabComplete());
 
-		checkForUpdate();
+		if (getConfigCheckForUpdates()) checkForUpdate();
 	}
 	
 	@Override
@@ -67,6 +68,8 @@ public class HorseInspector extends JavaPlugin {
 			System.out.println(msg.get(msg.size() - 1));
 		}
 
+		this.configCheckForUpdates = this.getConfig().getBoolean("check-for-updates");
+
 		msg.add("[" + this.getDescription().getName() + "] Config file loaded.");
 		System.out.println(msg.get(msg.size() - 1));
 
@@ -79,6 +82,10 @@ public class HorseInspector extends JavaPlugin {
 
 	public Material getConfigItem() {
 		return configItem;
+	}
+
+	public boolean getConfigCheckForUpdates() {
+		return this.configCheckForUpdates;
 	}
 
 }
