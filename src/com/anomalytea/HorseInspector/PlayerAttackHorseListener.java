@@ -58,30 +58,30 @@ public class PlayerAttackHorseListener implements Listener {
 		double hp = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
 		
 		// Convert internal values into meaningful numbers
-		double speedblocks = speed * 43; // m/s
-		double jumpblocks = -0.1817584952 * Math.pow(jump, 3) + 3.689713992*Math.pow(jump, 2) + 2.128599134 * jump - 0.343930367; // m
+		double speedBlocks = speed * 43; // m/s
+		double jumpBlocks = -0.1817584952 * Math.pow(jump, 3) + 3.689713992*Math.pow(jump, 2) + 2.128599134 * jump - 0.343930367; // m
 		double hearts = hp / 2.0;
 		
 		// Round values for display
-		speedblocks = round(speedblocks, 2);
-		jumpblocks = round(jumpblocks, 2);
+		speedBlocks = round(speedBlocks, 2);
+		jumpBlocks = round(jumpBlocks, 2);
 		hearts = round(hearts, 2);
 		
 		// Calculate percentages
-		double speedpercent = 100 * (speed - 0.1125) / (0.3375 - 0.1125);
-		double jumppercent = 100 * (jump - 0.4) / (1.0 - 0.4);
-		double hppercent = 100 * (hp - 15.0) / (30.0 - 15.0);
+		double speedPercent = 100 * (speed - 0.1125) / (0.3375 - 0.1125);
+		double jumpPercent = 100 * (jump - 0.4) / (1.0 - 0.4);
+		double hpPercent = 100 * (hp - 15.0) / (30.0 - 15.0);
 		
 		// Round percentages for display
-		speedpercent = round(speedpercent, 2);
-		jumppercent = round(jumppercent, 2);
-		hppercent = round(hppercent, 2);
+		speedPercent = round(speedPercent, 2);
+		jumpPercent = round(jumpPercent, 2);
+		hpPercent = round(hpPercent, 2);
 		
 		// Compose message to send to player
 		ChatColor labelColor = ChatColor.GREEN;
 		ChatColor percentColor = ChatColor.DARK_AQUA;
 		ChatColor resetColor = ChatColor.RESET;
-		ArrayList<String> msg = new ArrayList<String>();
+		ArrayList<String> msg = new ArrayList<>();
 		boolean calcPercent = e.getEntityType().equals(EntityType.HORSE)
 				|| e.getEntityType().equals(EntityType.SKELETON_HORSE)
 				|| e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
@@ -105,17 +105,17 @@ public class PlayerAttackHorseListener implements Listener {
 		msg.add(titleLine);
 		// Speed
 		if (calcPercent) {
-			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s " + percentColor + "(" + String.valueOf(speedpercent) + "% of max)" + resetColor);
+			msg.add(labelColor + "Speed: " + resetColor + speedBlocks + " m/s " + percentColor + "(" + speedPercent + "% of max)" + resetColor);
 		} else {
-			msg.add(labelColor + "Speed: " + resetColor + speedblocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
+			msg.add(labelColor + "Speed: " + resetColor + speedBlocks + " m/s"); // Speed isn't variable for Donkeys and Llamas
 		}
 		// HP
-		msg.add(labelColor + "HP: " + resetColor + String.valueOf(hearts) + " hearts " + percentColor + "(" + String.valueOf(hppercent) + "% of max)" + resetColor);
+		msg.add(labelColor + "HP: " + resetColor + hearts + " hearts " + percentColor + "(" + hpPercent + "% of max)" + resetColor);
 		// Jump Height
 		if (calcPercent) {
-			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m " + percentColor + "(" + String.valueOf(jumppercent) + "% of max)" + resetColor);
+			msg.add(labelColor + "Jump height: " + resetColor + jumpBlocks + " m " + percentColor + "(" + jumpPercent + "% of max)" + resetColor);
 		} else {
-			msg.add(labelColor + "Jump height: " + resetColor + jumpblocks + " m"); // Jump height isn't variable for Donkeys and Llamas
+			msg.add(labelColor + "Jump height: " + resetColor + jumpBlocks + " m"); // Jump height isn't variable for Donkeys and Llamas
 		}
 		// Tamer
 		if (!plugin.getConfigShowTamer()) {
