@@ -19,7 +19,6 @@ public class HorseInspector extends JavaPlugin {
 	public void onEnable() {
 		saveDefaultConfig();
 		loadConfig();
-		this.saveConfig();
 
 		getServer().getPluginManager().registerEvents(new PlayerAttackHorseListener(this), this);
 
@@ -59,8 +58,12 @@ public class HorseInspector extends JavaPlugin {
 
 		this.reloadConfig();
 
+		// show-tamer
+		if (!this.getConfig().isSet("show-tamer")) this.getConfig().set("show-tamer", this.getConfig().getDefaults().getBoolean("show-tamer"));
 		this.configShowTamer = this.getConfig().getBoolean("show-tamer");
 
+		// item
+		if (!this.getConfig().isSet("item")) this.getConfig().set("item", this.getConfig().getDefaults().getString("item"));
 		this.configItem = Material.matchMaterial(this.getConfig().getString("item"));
 		if (this.configItem == null) {
 			this.configItem = Material.STICK;
@@ -68,10 +71,14 @@ public class HorseInspector extends JavaPlugin {
 			System.out.println(msg.get(msg.size() - 1));
 		}
 
+		// check-for-updates
+		if (!this.getConfig().isSet("check-for-updates")) this.getConfig().set("check-for-updates", this.getConfig().getDefaults().getBoolean("check-for-updates"));
 		this.configCheckForUpdates = this.getConfig().getBoolean("check-for-updates");
 
 		msg.add("[" + this.getDescription().getName() + "] Config file loaded.");
 		System.out.println(msg.get(msg.size() - 1));
+
+		this.saveConfig();
 
 		return msg;
 	}
