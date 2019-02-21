@@ -44,7 +44,7 @@ public class PlayerAttackHorseListener implements Listener {
 		}
 		
 		// Only catch whacks with configured item
-		if( !((Player) e.getDamager()).getInventory().getItemInMainHand().getType().equals(plugin.getConfigItem()) ) {
+		if( !((Player) e.getDamager()).getInventory().getItemInMainHand().getType().equals(Material.matchMaterial(plugin.getConfig().getString("item"))) ) {
 			return;
 		}
 		
@@ -118,7 +118,7 @@ public class PlayerAttackHorseListener implements Listener {
 			msg.add(labelColor + "Jump height: " + resetColor + jumpBlocks + " m"); // Jump height isn't variable for Donkeys and Llamas
 		}
 		// Tamer
-		if (!plugin.getConfigShowTamer()) {
+		if (!plugin.getConfig().getBoolean("show-tamer")) {
 			// skip this line of the output
 		} else if (horse.getOwner() == null) {
 			msg.add(labelColor + "Tamer: " + resetColor + "Not tamed");
