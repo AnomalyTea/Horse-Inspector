@@ -59,7 +59,7 @@ public class PlayerAttackHorseListener implements Listener {
 		
 		// Convert internal values into meaningful numbers
 		double speedBlocks = speed * 43; // m/s
-		double jumpBlocks = -0.1817584952 * Math.pow(jump, 3) + 3.689713992*Math.pow(jump, 2) + 2.128599134 * jump - 0.343930367; // m
+		double jumpBlocks = jumpStrToBlocks(jump); // m
 		double hearts = hp / 2.0;
 		
 		// Round values for display
@@ -68,8 +68,8 @@ public class PlayerAttackHorseListener implements Listener {
 		hearts = round(hearts, 2);
 		
 		// Calculate percentages
-		double speedPercent = 100 * (speed - 0.1125) / (0.3375 - 0.1125);
-		double jumpPercent = 100 * (jump - 0.4) / (1.0 - 0.4);
+		double speedPercent = 100 * (speedBlocks - 4.8375) / (14.5125 - 4.8375);
+		double jumpPercent = 100 * (jumpBlocks - jumpStrToBlocks(0.4)) / (jumpStrToBlocks(1.0) - jumpStrToBlocks(0.4));
 		double hpPercent = 100 * (hp - 15.0) / (30.0 - 15.0);
 		
 		// Round percentages for display
@@ -139,6 +139,10 @@ public class PlayerAttackHorseListener implements Listener {
 		BigDecimal bd = new BigDecimal(value);
 		bd = bd.setScale(places, RoundingMode.HALF_UP);
 		return bd.doubleValue();
+	}
+
+	public static double jumpStrToBlocks(double jumpStr) {
+		return -0.1817584952 * Math.pow(jumpStr, 3) + 3.689713992*Math.pow(jumpStr, 2) + 2.128599134 * jumpStr - 0.343930367;
 	}
 
 }
