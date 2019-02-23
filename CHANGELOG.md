@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2019-02-22
+### Added
+- Config option to enable/disable showing of tamer.
+- Config option to change the triggering item to something other than a stick.
+- Config option to enable/disable update checking on load.
+- `/horseinspector reload` command to reload config without restarting server.
+
+### Changed
+- Jump percent now calculated using meters, rather than internal jumpstrength value.
+
 ## [1.1.1] - 2019-02-12
 ### Fixed
 - Mules are now properly recognized
