@@ -27,7 +27,7 @@ public class CommandHandler implements CommandExecutor {
     }
 
     // Catch reload command
-    if (args.length >= 1 && args[0].equals("reload")) {
+    if (args.length >= 1 && args[0].equalsIgnoreCase("reload")) {
       // Load config and store response
       ArrayList<String> msg = plugin.loadConfig();
 
