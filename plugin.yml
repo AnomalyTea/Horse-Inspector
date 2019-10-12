@@ -6,3 +6,8 @@ commands:
   horseinspector:
     description: Reload the Horse Inspector configuration file without restarting the server.
     usage: /horseinspector reload
+permissions:
+  horseinspector.use:
+    default: true
+  horseinspector.reload:
+    default: op

@@ -49,6 +49,11 @@ public class PlayerAttackHorseListener implements Listener {
       return;
     }
 
+    // Check permissions
+    if(!e.getDamager().hasPermission("horseinspector.use")) {
+      return;
+    }
+
     // Cancel damage
     e.setCancelled(true);
 

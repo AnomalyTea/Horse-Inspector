@@ -19,10 +19,9 @@ public class CommandHandler implements CommandExecutor {
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-    // Require OP permissions to execute command
-    if (sender instanceof Player && !((Player) sender).isOp()) {
-      ((Player) sender).sendMessage(ChatColor.GREEN +
-          "Error: This command can only be issued by an OP.");
+    // Check permissions
+    if(sender instanceof Player && !sender.hasPermission("horseinspector.reload")) {
+      sender.sendMessage(ChatColor.GREEN + "Error: You do not have permissions to do that.");
       return true;
     }
 
