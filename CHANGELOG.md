@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2019-10-13
+### Added
+- Permission nodes for general use and config reloading.
+- Option to match a specific item name.
+
 ## [1.2.1] - 2019-04-27
 - Updated to Minecraft version 1.14
 
