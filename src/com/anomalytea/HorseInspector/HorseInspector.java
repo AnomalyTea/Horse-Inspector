@@ -70,6 +70,11 @@ public class HorseInspector extends JavaPlugin {
           "check-for-updates", this.getConfig().getDefaults().getBoolean("check-for-updates"));
       this.saveConfig();
     }
+    if (!this.getConfig().isSet("item-name")) {
+      this.getConfig().set(
+          "item-name", this.getConfig().getDefaults().getString("item-name"));
+      this.saveConfig();
+    }
 
     // if item can't match, use default
     if (Material.matchMaterial(this.getConfig().getString("item")) == null) {

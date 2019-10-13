@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PlayerAttackHorseListener implements Listener {
@@ -43,10 +44,25 @@ public class PlayerAttackHorseListener implements Listener {
       return;
     }
 
+    ItemStack item = ((Player) e.getDamager()).getInventory().getItemInMainHand();
+
     // Only catch whacks with configured item
-    if( !((Player) e.getDamager()).getInventory().getItemInMainHand().getType().equals(
-        Material.matchMaterial(plugin.getConfig().getString("item"))) ) {
+    if(!item.getType().equals(Material.matchMaterial(plugin.getConfig().getString("item")))) {
       return;
+    }
+
+    // If item name is configured, only catch whacks that match
+    if(plugin.getConfig().isSet("item-name")) {
+      String itemName = "";
+
+      if(item.getItemMeta().hasDisplayName()) {
+        itemName = item.getItemMeta().getDisplayName();
+      }
+
+      if(!itemName.equals(plugin.getConfig().getString("item-name"))) {
+        return;
+      }
+
     }
 
     // Check permissions
