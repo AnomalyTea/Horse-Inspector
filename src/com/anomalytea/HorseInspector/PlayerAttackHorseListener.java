@@ -39,8 +39,9 @@ public class PlayerAttackHorseListener implements Listener {
         || e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
         || e.getEntityType().equals(EntityType.DONKEY)
         || e.getEntityType().equals(EntityType.MULE)
-        || e.getEntityType().equals(EntityType.LLAMA)))
-    {
+        || e.getEntityType().equals(EntityType.LLAMA)
+        || e.getEntityType().equals(EntityType.TRADER_LLAMA)
+        )) {
       return;
     }
 
@@ -115,7 +116,7 @@ public class PlayerAttackHorseListener implements Listener {
       titleLine += "Donkey";
     } else if (horse.getType().equals(EntityType.MULE)) {
       titleLine += "Mule";
-    } else if (horse.getType().equals(EntityType.LLAMA)) {
+    } else if (horse.getType().equals(EntityType.LLAMA) || horse.getType().equals(EntityType.TRADER_LLAMA)) {
       titleLine += "Llama";
     } else {
       titleLine += "Horse";
