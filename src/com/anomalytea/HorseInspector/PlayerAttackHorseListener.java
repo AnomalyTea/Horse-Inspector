@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Llama;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -145,6 +146,10 @@ public class PlayerAttackHorseListener implements Listener {
     } else {
       // Jump height isn't variable for Donkeys and Llamas
       msg.add(labelColor + "Jump height: " + resetColor + jumpBlocks + " m");
+    }
+    // Strength (if llama)
+    if (horse.getType().equals(EntityType.LLAMA) || horse.getType().equals(EntityType.TRADER_LLAMA)) {
+      msg.add(labelColor + "Strength: " + resetColor + ((Llama) horse).getStrength());
     }
     // Tamer
     if (!plugin.getConfig().getBoolean("show-tamer")) {
