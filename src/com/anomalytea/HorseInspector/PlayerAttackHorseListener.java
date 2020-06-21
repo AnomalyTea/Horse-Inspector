@@ -183,11 +183,16 @@ public class PlayerAttackHorseListener implements Listener {
             + jumpPercent
             + "% of max)"
             + resetColor;
+        msg.add(jumpString);
+        break;
+      case LLAMA:
+      case TRADER_LLAMA:
+        // skip jump height line entirely on Llamas
         break;
       default:
+        msg.add(jumpString);
         break;
     }
-    msg.add(jumpString);
 
     // Strength (if llama)
     switch (entityType) {
