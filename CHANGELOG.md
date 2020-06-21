@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.1] - 2020-06-21
+### Changed
+- Output includes Strength stat for Llamas.
+
+### Fixed
+- Fixed plugin not working on Trader Llamas.
+
 ## [1.3.0] - 2019-10-13
 ### Added
 - Permission nodes for general use and config reloading.
