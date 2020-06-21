@@ -108,10 +108,6 @@ public class PlayerAttackHorseListener implements Listener {
     ChatColor percentColor = ChatColor.DARK_AQUA;
     ChatColor resetColor = ChatColor.RESET;
     ArrayList<String> msg = new ArrayList<>();
-    boolean calcPercent = e.getEntityType() == EntityType.HORSE
-        || entityType == EntityType.SKELETON_HORSE
-        || entityType == EntityType.ZOMBIE_HORSE
-        || entityType == EntityType.MULE;
 
     String titleLine = labelColor + "--";
     switch (entityType) {
@@ -137,25 +133,27 @@ public class PlayerAttackHorseListener implements Listener {
     msg.add(titleLine);
 
     // Speed
-    if (calcPercent) {
-      msg.add(labelColor
-          + "Speed: "
-          + resetColor
-          + speedBlocks
-          + " m/s "
-          + percentColor
-          + "("
-          + speedPercent
-          + "% of max)"
-          + resetColor);
-    } else {
-      // Speed isn't variable for Donkeys and Llamas
-      msg.add(labelColor
-          + "Speed: "
-          + resetColor
-          + speedBlocks
-          + " m/s");
+    String speedString = labelColor
+        + "Speed: "
+        + resetColor
+        + speedBlocks
+        + " m/s ";
+    switch (entityType) {
+      case HORSE:
+      case SKELETON_HORSE:
+      case ZOMBIE_HORSE:
+      case MULE:
+        speedString += percentColor
+            + "("
+            + speedPercent
+            + "% of max)"
+            + resetColor;
+        break;
+      default:
+        break;
     }
+    msg.add(speedString);
+
 
     // HP
     msg.add(labelColor
@@ -170,32 +168,44 @@ public class PlayerAttackHorseListener implements Listener {
         + resetColor);
 
     // Jump Height
-    if (calcPercent) {
-      msg.add(labelColor
-          + "Jump height: "
-          + resetColor
-          + jumpBlocks
-          + " m "
-          + percentColor
-          + "("
-          + jumpPercent
-          + "% of max)"
-          + resetColor);
-    } else {
-      // Jump height isn't variable for Donkeys and Llamas
-      msg.add(labelColor
-          + "Jump height: "
-          + resetColor
-          + jumpBlocks
-          + " m");
+    String jumpString = labelColor
+        + "Jump height: "
+        + resetColor
+        + jumpBlocks
+        + " m ";
+    switch (entityType) {
+      case HORSE:
+      case SKELETON_HORSE:
+      case ZOMBIE_HORSE:
+      case MULE:
+        jumpString += percentColor
+            + "("
+            + jumpPercent
+            + "% of max)"
+            + resetColor;
+        break;
+      default:
+        break;
     }
+    msg.add(jumpString);
 
     // Strength (if llama)
-    if (entityType == EntityType.LLAMA || entityType == EntityType.TRADER_LLAMA) {
-      msg.add(labelColor
-          + "Strength: "
-          + resetColor
-          + ((Llama) horse).getStrength());
+    switch (entityType) {
+      case LLAMA:
+      case TRADER_LLAMA:
+        int strength = ((Llama) horse).getStrength();
+        msg.add(labelColor
+            + "Strength: "
+            + resetColor
+            + strength
+            + percentColor
+            + " ("
+            + (strength * 20)
+            + "% of max)"
+            + resetColor);
+        break;
+      default:
+        break;
     }
 
     // Tamer
