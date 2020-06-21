@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,9 +50,9 @@ public class HorseInspector extends JavaPlugin {
     }
   }
 
-  public ArrayList<String> loadConfig() {
+  public List<String> loadConfig() {
 
-    ArrayList<String> msg = new ArrayList<>();
+    List<String> msg = new ArrayList<>();
 
     this.reloadConfig();
 
@@ -80,9 +81,11 @@ public class HorseInspector extends JavaPlugin {
     if (Material.matchMaterial(this.getConfig().getString("item")) == null) {
       this.getConfig().set(
           "item", Material.matchMaterial(this.getConfig().getDefaults().getString("item")));
-      msg.add("[" + this.getDescription().getName()
+      msg.add("["
+          + this.getDescription().getName()
           + "] Error reading config: invalid item. Using "
-          + this.getConfig().getDefaults().getString("item") + " instead.");
+          + this.getConfig().getDefaults().getString("item")
+          + " instead.");
       System.out.println(msg.get(msg.size() - 1));
     }
 

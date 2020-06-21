@@ -30,18 +30,19 @@ public class PlayerAttackHorseListener implements Listener {
   public void onPlayerHitHorse(EntityDamageByEntityEvent e) {
 
     // Only catch player attacks
-    if(!(e.getDamager() instanceof Player && e.getCause().equals(DamageCause.ENTITY_ATTACK))) {
+    if(!(e.getDamager() instanceof Player && e.getCause() == DamageCause.ENTITY_ATTACK)) {
       return;
     }
 
     // Only catch horse type victims
-    if(!(e.getEntityType().equals(EntityType.HORSE)
-        || e.getEntityType().equals(EntityType.SKELETON_HORSE)
-        || e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
-        || e.getEntityType().equals(EntityType.DONKEY)
-        || e.getEntityType().equals(EntityType.MULE)
-        || e.getEntityType().equals(EntityType.LLAMA)
-        || e.getEntityType().equals(EntityType.TRADER_LLAMA)
+    EntityType entityType = e.getEntityType();
+    if (!(entityType == EntityType.HORSE
+        || entityType == EntityType.SKELETON_HORSE
+        || entityType == EntityType.ZOMBIE_HORSE
+        || entityType == EntityType.DONKEY
+        || entityType == EntityType.MULE
+        || entityType == EntityType.LLAMA
+        || entityType == EntityType.TRADER_LLAMA
         )) {
       return;
     }
@@ -49,26 +50,26 @@ public class PlayerAttackHorseListener implements Listener {
     ItemStack item = ((Player) e.getDamager()).getInventory().getItemInMainHand();
 
     // Only catch whacks with configured item
-    if(!item.getType().equals(Material.matchMaterial(plugin.getConfig().getString("item")))) {
+    if (item.getType() != Material.matchMaterial(plugin.getConfig().getString("item"))) {
       return;
     }
 
     // If item name is configured, only catch whacks that match
-    if(plugin.getConfig().isSet("item-name")) {
+    if (plugin.getConfig().isSet("item-name")) {
       String itemName = "";
 
-      if(item.getItemMeta().hasDisplayName()) {
+      if (item.getItemMeta().hasDisplayName()) {
         itemName = item.getItemMeta().getDisplayName();
       }
 
-      if(!itemName.equals(plugin.getConfig().getString("item-name"))) {
+      if (!itemName.equals(plugin.getConfig().getString("item-name"))) {
         return;
       }
 
     }
 
     // Check permissions
-    if(!e.getDamager().hasPermission("horseinspector.use")) {
+    if (!e.getDamager().hasPermission("horseinspector.use")) {
       return;
     }
 
@@ -107,20 +108,26 @@ public class PlayerAttackHorseListener implements Listener {
     ChatColor percentColor = ChatColor.DARK_AQUA;
     ChatColor resetColor = ChatColor.RESET;
     ArrayList<String> msg = new ArrayList<>();
-    boolean calcPercent = e.getEntityType().equals(EntityType.HORSE)
-        || e.getEntityType().equals(EntityType.SKELETON_HORSE)
-        || e.getEntityType().equals(EntityType.ZOMBIE_HORSE)
-        || e.getEntityType().equals(EntityType.MULE);
+    boolean calcPercent = e.getEntityType() == EntityType.HORSE
+        || entityType == EntityType.SKELETON_HORSE
+        || entityType == EntityType.ZOMBIE_HORSE
+        || entityType == EntityType.MULE;
 
     String titleLine = labelColor + "--";
-    if (horse.getType().equals(EntityType.DONKEY)) {
-      titleLine += "Donkey";
-    } else if (horse.getType().equals(EntityType.MULE)) {
-      titleLine += "Mule";
-    } else if (horse.getType().equals(EntityType.LLAMA) || horse.getType().equals(EntityType.TRADER_LLAMA)) {
-      titleLine += "Llama";
-    } else {
-      titleLine += "Horse";
+    switch (entityType) {
+      case DONKEY:
+        titleLine += "Donkey";
+        break;
+      case MULE:
+        titleLine += "Mule";
+        break;
+      case LLAMA:
+      case TRADER_LLAMA:
+        titleLine += "Llama";
+        break;
+      default:
+        titleLine += "Horse";
+        break;
     }
     titleLine += " Info";
     if (horse.getCustomName() != null) {
@@ -128,38 +135,87 @@ public class PlayerAttackHorseListener implements Listener {
     }
     titleLine += labelColor + "--";
     msg.add(titleLine);
+
     // Speed
     if (calcPercent) {
-      msg.add(labelColor + "Speed: " + resetColor + speedBlocks + " m/s " + percentColor + "("
-          + speedPercent + "% of max)" + resetColor);
+      msg.add(labelColor
+          + "Speed: "
+          + resetColor
+          + speedBlocks
+          + " m/s "
+          + percentColor
+          + "("
+          + speedPercent
+          + "% of max)"
+          + resetColor);
     } else {
       // Speed isn't variable for Donkeys and Llamas
-      msg.add(labelColor + "Speed: " + resetColor + speedBlocks + " m/s");
+      msg.add(labelColor
+          + "Speed: "
+          + resetColor
+          + speedBlocks
+          + " m/s");
     }
+
     // HP
-    msg.add(labelColor + "HP: " + resetColor + hearts + " hearts " + percentColor + "(" + hpPercent
-        + "% of max)" + resetColor);
+    msg.add(labelColor
+        + "HP: "
+        + resetColor
+        + hearts
+        + " hearts "
+        + percentColor
+        + "("
+        + hpPercent
+        + "% of max)"
+        + resetColor);
+
     // Jump Height
     if (calcPercent) {
-      msg.add(labelColor + "Jump height: " + resetColor + jumpBlocks + " m " + percentColor + "("
-          + jumpPercent + "% of max)" + resetColor);
+      msg.add(labelColor
+          + "Jump height: "
+          + resetColor
+          + jumpBlocks
+          + " m "
+          + percentColor
+          + "("
+          + jumpPercent
+          + "% of max)"
+          + resetColor);
     } else {
       // Jump height isn't variable for Donkeys and Llamas
-      msg.add(labelColor + "Jump height: " + resetColor + jumpBlocks + " m");
+      msg.add(labelColor
+          + "Jump height: "
+          + resetColor
+          + jumpBlocks
+          + " m");
     }
+
     // Strength (if llama)
-    if (horse.getType().equals(EntityType.LLAMA) || horse.getType().equals(EntityType.TRADER_LLAMA)) {
-      msg.add(labelColor + "Strength: " + resetColor + ((Llama) horse).getStrength());
+    if (entityType == EntityType.LLAMA || entityType == EntityType.TRADER_LLAMA) {
+      msg.add(labelColor
+          + "Strength: "
+          + resetColor
+          + ((Llama) horse).getStrength());
     }
+
     // Tamer
     if (!plugin.getConfig().getBoolean("show-tamer")) {
       // skip this line of the output
     } else if (horse.getOwner() == null) {
-      msg.add(labelColor + "Tamer: " + resetColor + "Not tamed");
+      msg.add(labelColor
+          + "Tamer: "
+          + resetColor
+          + "Not tamed");
     } else if (horse.getOwner().getName() == null) {
-      msg.add(labelColor + "Tamer: " + resetColor + horse.getOwner().getUniqueId());
+      msg.add(labelColor
+          + "Tamer: "
+          + resetColor
+          + horse.getOwner().getUniqueId());
     } else {
-      msg.add(labelColor + "Tamer: " + resetColor + horse.getOwner().getName());
+      msg.add(labelColor
+          + "Tamer: "
+          + resetColor
+          + horse.getOwner().getName());
     }
 
     // Send message to player
@@ -170,7 +226,7 @@ public class PlayerAttackHorseListener implements Listener {
 
   public static double round(double value, int places) {
     if (places < 0) throw new IllegalArgumentException();
-    BigDecimal bd = new BigDecimal(value);
+    BigDecimal bd = BigDecimal.valueOf(value);
     bd = bd.setScale(places, RoundingMode.HALF_UP);
     return bd.doubleValue();
   }

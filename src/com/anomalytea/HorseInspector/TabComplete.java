@@ -13,7 +13,7 @@ import java.util.List;
 public class TabComplete implements TabCompleter {
 
   private static final String[] COMMANDS = {
-      "reload",
+    "reload",
   };
 
   @Override

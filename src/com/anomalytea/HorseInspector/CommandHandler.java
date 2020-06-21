@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommandHandler implements CommandExecutor {
 
@@ -20,7 +21,7 @@ public class CommandHandler implements CommandExecutor {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
     // Check permissions
-    if(sender instanceof Player && !sender.hasPermission("horseinspector.reload")) {
+    if (sender instanceof Player && !sender.hasPermission("horseinspector.reload")) {
       sender.sendMessage(ChatColor.GREEN + "Error: You do not have permissions to do that.");
       return true;
     }
@@ -28,7 +29,7 @@ public class CommandHandler implements CommandExecutor {
     // Catch reload command
     if (args.length >= 1 && args[0].equalsIgnoreCase("reload")) {
       // Load config and store response
-      ArrayList<String> msg = plugin.loadConfig();
+      List<String> msg = plugin.loadConfig();
 
       // If issue by player, send response (if any) to player
       if (sender instanceof Player) {
