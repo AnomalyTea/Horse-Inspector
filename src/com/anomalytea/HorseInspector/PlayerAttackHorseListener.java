@@ -141,6 +141,7 @@ public class PlayerAttackHorseListener implements Listener {
       case HORSE:
       case SKELETON_HORSE:
       case ZOMBIE_HORSE:
+      case DONKEY:
       case MULE:
         speedString += percentColor
             + "("
@@ -176,6 +177,7 @@ public class PlayerAttackHorseListener implements Listener {
       case HORSE:
       case SKELETON_HORSE:
       case ZOMBIE_HORSE:
+      case DONKEY:
       case MULE:
         jumpString += percentColor
             + "("
