@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,7 +33,6 @@ public class HorseInspector extends JavaPlugin {
   }
 
   public void checkForUpdate() {
-    String tag = "[" + this.getDescription().getName() + "] ";
     try {
       URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=64721");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -41,12 +41,12 @@ public class HorseInspector extends JavaPlugin {
       String v = rd.readLine();
       rd.close();
       if (v.equals(this.getDescription().getVersion())) {
-        System.out.println(tag + "Version is up-to-date.");
+        this.getLogger().log(Level.INFO, "Version is up-to-date.");
       } else {
-        System.out.println(tag + "Updated version available: " + v);
+        this.getLogger().log(Level.INFO, "Updated version available: {0}", v);
       }
     } catch (IOException e) {
-      System.out.println(tag + "An error occurred while checking for updates.");
+      this.getLogger().log(Level.WARNING, "An error occurred while checking for updates.");
     }
   }
 
@@ -81,16 +81,14 @@ public class HorseInspector extends JavaPlugin {
     if (Material.matchMaterial(this.getConfig().getString("item")) == null) {
       this.getConfig().set(
           "item", Material.matchMaterial(this.getConfig().getDefaults().getString("item")));
-      msg.add("["
-          + this.getDescription().getName()
-          + "] Error reading config: invalid item. Using "
+      msg.add("Error reading config: invalid item. Using "
           + this.getConfig().getDefaults().getString("item")
           + " instead.");
-      System.out.println(msg.get(msg.size() - 1));
+      this.getLogger().log(Level.WARNING, msg.get(msg.size() - 1));
     }
 
-    msg.add("[" + this.getDescription().getName() + "] Config file loaded.");
-    System.out.println(msg.get(msg.size() - 1));
+    msg.add("Config file loaded.");
+    this.getLogger().log(Level.INFO, msg.get(msg.size() - 1));
 
     return msg;
   }
