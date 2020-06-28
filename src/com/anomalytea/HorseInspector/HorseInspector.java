@@ -34,19 +34,22 @@ public class HorseInspector extends JavaPlugin {
 
   public void checkForUpdate() {
     try {
+      Version current = new Version(this.getDescription().getVersion());
       URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=64721");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("GET");
       BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
       String v = rd.readLine();
       rd.close();
-      if (v.equals(this.getDescription().getVersion())) {
+      Version available = new Version(v);
+      if (current.equals(available)) {
         this.getLogger().log(Level.INFO, "Version is up-to-date.");
-      } else {
-        this.getLogger().log(Level.INFO, "Updated version available: {0}", v);
+      } else if (current.isLessThan(available)) {
+        this.getLogger().log(Level.INFO, "Updated version available: {0}", available.toString());
       }
-    } catch (IOException e) {
-      this.getLogger().log(Level.WARNING, "An error occurred while checking for updates.");
+    } catch (IOException | IllegalArgumentException e) {
+      this.getLogger().log(Level.WARNING, "An error occurred while checking for updates: {0}",
+          e.getMessage());
     }
   }
 
