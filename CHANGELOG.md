@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.3.2] - 2020-06-27
+### Fixed
+- Fixed some percentages being missing from Donkey stats.
+
 ## [1.3.1] - 2020-06-21
 ### Changed
 - Output includes Strength stat for Llamas.
